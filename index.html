@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080d1d">
+<title>Tia | Number Lab | غربال اراتستن</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+--bg:#080d1d;
+--panel:#111a32;
+--panel2:#172342;
+--line:#29385c;
+--text:#edf3ff;
+--muted:#91a2c7;
+--cyan:#36d9ed;
+--gold:#ffc857;
+--red:#fb7185;
+--green:#4ade80;
+}
+*{box-sizing:border-box}
+body{
+margin:0;
+background:
+radial-gradient(ellipse at 80% 0%,#12314b 0,transparent 35%),
+radial-gradient(ellipse at 10% 10%,#29204b 0,transparent 30%),
+var(--bg);
+color:var(--text);
+font-family:Vazirmatn,Tahoma,sans-serif;
+min-height:100vh;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+.container{max-width:1150px;margin:auto;padding:30px 18px 70px}
+header{margin-bottom:25px}
+.logo{
+display:inline-flex;
+align-items:center;
+gap:9px;
+color:var(--cyan);
+font-weight:800;
+letter-spacing:1px;
+font-size:13px;
+}
+.logo span{
+width:32px;height:32px;
+display:grid;place-items:center;
+border:1px solid #36d9ed66;
+border-radius:10px;
+background:#36d9ed14;
+font-size:19px;
+}
+h1{font-size:clamp(27px,5vw,43px);margin:12px 0 4px;font-weight:800}
+.subtitle{color:var(--muted);margin:0;font-size:14px}
+.hero{
+display:grid;
+grid-template-columns:1.4fr 1fr;
+gap:14px;
+margin:25px 0;
+}
+.panel{
+background:linear-gradient(145deg,#172342,#10182e);
+border:1px solid var(--line);
+border-radius:19px;
+padding:19px;
+box-shadow:0 15px 40px #0002;
+}
+.panel-title{font-size:14px;color:var(--muted);margin-bottom:12px}
+.big-number{font-size:clamp(25px,4vw,37px);font-weight:800;direction:ltr;text-align:right;color:var(--cyan);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.description{font-size:12px;color:var(--muted);margin-top:6px}
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+margin:15px 0;
+}
+.stat{
+background:#111a32;
+border:1px solid var(--line);
+border-radius:15px;
+padding:15px;
+min-width:0;
+}
+.stat-label{color:var(--muted);font-size:12px}
+.stat-value{font-size:23px;font-weight:800;margin-top:5px;direction:ltr;text-align:right;overflow-wrap:anywhere}
+.cyan{color:var(--cyan)}
+.gold{color:var(--gold)}
+.green{color:var(--green)}
+.controls{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}
+label{display:block;color:var(--muted);font-size:13px;margin-bottom:7px}
+input{
+width:100%;
+background:#090f22;
+border:1px solid var(--line);
+border-radius:11px;
+padding:12px;
+color:var(--text);
+outline:none;
+direction:ltr;
+font-family:Consolas,monospace;
+font-size:16px;
+}
+input:focus{border-color:var(--cyan)}
+input[type=range]{
+padding:0;
+border:0;
+background:transparent;
+accent-color:var(--cyan);
+height:28px;
+direction:ltr;
+cursor:pointer;
+}
+.btn{
+border:0;
+border-radius:11px;
+padding:11px 18px;
+font-weight:700;
+background:var(--cyan);
+color:#061522;
+transition:.2s;
+}
+.btn:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn.secondary{background:#202f50;color:var(--text);border:1px solid var(--line)}
+.btn.danger{background:#471e35;color:#ffb4c2;border:1px solid #8e3450}
+.btn.small{padding:7px 13px;font-size:13px}
+.btn.active{outline:2px solid var(--gold)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
+.progress-area{margin-top:20px}
+.progress-info{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--muted);margin-bottom:8px}
+.progress{
+height:9px;
+background:#080e20;
+border-radius:20px;
+overflow:hidden;
+border:1px solid #253352;
+}
+.progress-fill{
+height:100%;width:0;
+background:linear-gradient(90deg,var(--cyan),var(--gold));
+border-radius:20px;
+transition:width .15s;
+}
+.status{font-size:13px;color:var(--muted);margin-top:12px;min-height:25px}
+.section-title{font-size:18px;font-weight:800;margin:30px 0 12px}
+.results{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(125px,1fr));
+gap:8px;
+}
+.result{
+background:#111a32;
+border:1px solid var(--line);
+border-radius:11px;
+padding:9px;
+text-align:center;
+direction:ltr;
+font-family:Consolas,monospace;
+font-size:14px;
+}
+.result.prime{color:var(--gold);border-color:#ffc85755;background:#ffc8570d}
+.result small{display:block;font-family:Vazirmatn;font-size:10px;color:var(--muted)}
+.notice{
+border:1px solid #ffc85744;
+background:#ffc8570b;
+color:#e8d39e;
+padding:12px 14px;
+border-radius:12px;
+font-size:12px;
+line-height:2;
+margin-top:15px;
+}
+
+/* ---- Visual lab ---- */
+.lab-row{margin-bottom:16px}
+.speed-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.speed-head label{margin:0}
+.speed-readout{font-size:14px;font-weight:800;color:var(--gold)}
+.speed-scale{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);direction:ltr;margin-top:-2px}
+.lab-stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:8px;
+margin:14px 0;
+}
+.lab-stat{background:#0c1429;border:1px solid var(--line);border-radius:12px;padding:10px 12px;min-width:0}
+.lab-stat b{display:block;font-size:17px;margin-top:3px;direction:ltr;text-align:right;overflow-wrap:anywhere}
+.lab-stat span{font-size:11px;color:var(--muted)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin:12px 0}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-left:6px;vertical-align:-2px}
+.canvas-wrap{
+background:#090f22;
+border:1px solid var(--line);
+border-radius:14px;
+padding:8px;
+overflow:auto;
+max-height:78vh;
+text-align:center;
+}
+.canvas-wrap{transition:box-shadow .4s}
+.canvas-wrap.glow{box-shadow:0 0 34px #36d9ed38,inset 0 0 40px #36d9ed14;border-color:#36d9ed88}
+#labCanvas{display:block;width:100%;height:auto;margin:auto;border-radius:8px}
+
+.footer{
+text-align:center;
+color:#647596;
+font-size:12px;
+margin-top:45px;
+}
+.hidden{display:none!important}
+@media(max-width:650px){
+.hero{grid-template-columns:1fr}
+.stats{grid-template-columns:1fr 1fr}
+.controls{grid-template-columns:1fr}
+.controls .btn{width:100%}
+.lab-stats{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+<div class="logo"><span>∑</span> استاد قربانی</div>
+<h1>غربال اراتستن</h1>
+<p class="subtitle">ساخته شده توسط محمد طاها غلامی</p>
+</header>
+
+<div class="hero">
+<div class="panel">
+<div class="panel-title">حداکثر محدوده قابل انتخاب</div>
+<div class="big-number">9,999,999,999</div>
+<div class="description">ده میلیارد منهای یک · محدوده محاسباتی نسخه حرفه‌ای</div>
+</div>
+<div class="panel">
+<div class="panel-title">الگوریتم محاسبات</div>
+<div style="font-size:22px;font-weight:800;color:var(--gold)">Sieve of Eratosthenes</div>
+<div class="description">انجام غربال اراتستن</div>
+</div>
+</div>
+
+<div class="stats">
+<div class="stat">
+<div class="stat-label">تعداد اعداد اول</div>
+<div class="stat-value gold" id="primeCount">---</div>
+</div>
+<div class="stat">
+<div class="stat-label">اعداد بررسی‌شده</div>
+<div class="stat-value cyan" id="checked">0</div>
+</div>
+<div class="stat">
+<div class="stat-label">زمان محاسبه</div>
+<div class="stat-value green" id="elapsed">0s</div>
+</div>
+</div>
+
+<div class="panel">
+<div class="panel-title">تنظیمات محاسبه</div>
+<div class="controls">
+<div>
+<label for="limit">حد بالای محاسبه</label>
+<input id="limit" type="text" inputmode="numeric" value="1000000">
+</div>
+<button class="btn" id="start">شروع محاسبه</button>
+</div>
+<div class="actions">
+<button class="btn secondary" id="quick1">۱۰۰ هزار</button>
+<button class="btn secondary" id="quick2">۱ میلیون</button>
+<button class="btn secondary" id="quick3">۱۰ میلیون</button>
+<button class="btn secondary" id="quick4">۱۰۰ میلیون</button>
+<button class="btn secondary" id="quick5">۱۰ میلیارد</button>
+<button class="btn danger" id="cancel" disabled>توقف</button>
+</div>
+<div class="progress-area">
+<div class="progress-info">
+<span id="progressText">آماده محاسبه</span>
+<span id="percent">۰٪</span>
+</div>
+<div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+<div class="status" id="status">یک محدوده انتخاب کن و محاسبه را شروع کن.</div>
+</div>
+<div class="notice">
+ممکن است کم زمان بر باشد
+</div>
+
+<h2 class="section-title">۱۰۰ عدد اول ابتدایی</h2>
+<div class="chips" id="firstPrimes" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(65px,1fr));gap:7px"></div>
+
+<h2 class="section-title">آزمایشگاه تصویری غربال</h2>
+<div class="panel">
+<div class="panel-title">نمایش زنده‌ی غربال با کنترل کامل سرعت، تا ۱۰ میلیارد</div>
+
+<div class="controls lab-row">
+<div>
+<label for="labN">غربال از ۱ تا چه عددی؟ (۲ تا ۹٬۹۹۹٬۹۹۹٬۹۹۹)</label>
+<input id="labN" type="text" inputmode="numeric" value="100">
+</div>
+<button class="btn" id="labApply">اعمال</button>
+</div>
+<div class="actions lab-row" id="labQuick" style="margin-top:0">
+<button class="btn secondary small" data-n="100">۱۰۰</button>
+<button class="btn secondary small" data-n="400">۴۰۰</button>
+<button class="btn secondary small" data-n="1000">۱٬۰۰۰</button>
+<button class="btn secondary small" data-n="10000">۱۰ هزار</button>
+<button class="btn secondary small" data-n="100000">۱۰۰ هزار</button>
+<button class="btn secondary small" data-n="1000000">۱ میلیون</button>
+<button class="btn secondary small" data-n="10000000">۱۰ میلیون</button>
+<button class="btn secondary small" data-n="100000000">۱۰۰ میلیون</button>
+<button class="btn secondary small" data-n="1000000000">۱ میلیارد</button>
+<button class="btn secondary small" data-n="9999999999">۱۰ میلیارد</button>
+</div>
+
+<div class="lab-row">
+<div class="speed-head">
+<label for="labSpeed">سرعت خط خوردن</label>
+<span class="speed-readout" id="labSpeedText"></span>
+</div>
+<input id="labSpeed" type="range" min="0" max="100" step="1" value="30">
+<div class="speed-scale"><span>خیلی کند</span><span>حداکثر سرعت</span></div>
+<div class="actions" style="margin-top:8px">
+<button class="btn secondary small" data-v="10">کند</button>
+<button class="btn secondary small" data-v="35">متوسط</button>
+<button class="btn secondary small" data-v="60">سریع</button>
+<button class="btn secondary small" data-v="80">خیلی سریع</button>
+<button class="btn secondary small" data-v="100">حداکثر</button>
+<button class="btn secondary small" id="labAuto">سرعت هوشمند (حدود ۱۲ ثانیه)</button>
+</div>
+</div>
+
+<div class="actions lab-row" style="margin-top:0">
+<button class="btn" id="labPlay">▶ شروع</button>
+<button class="btn secondary" id="labStep">یک قدم</button>
+<button class="btn secondary" id="labStepPrime">یک عدد اول کامل</button>
+<button class="btn secondary" id="labSkip">پرش به پایان</button>
+<button class="btn danger" id="labReset">شروع مجدد</button>
+</div>
+
+<div class="progress-info">
+<span id="labInfo">آماده شروع</span>
+<span id="labPct">۰٪</span>
+</div>
+<div class="progress"><div class="progress-fill" id="labFill"></div></div>
+
+<div class="lab-stats">
+<div class="lab-stat"><span id="labPL">عدد اول در حال بررسی</span><b id="labP" class="cyan">-</b></div>
+<div class="lab-stat"><span id="labCL">خط‌خورده‌ها (مرکب)</span><b id="labCrossed" style="color:var(--red)">0</b></div>
+<div class="lab-stat"><span id="labPrL">اعداد اول تا اینجا</span><b id="labPrimes" class="gold">0</b></div>
+<div class="lab-stat"><span id="labOL">گام‌های انجام‌شده</span><b id="labOps">0</b></div>
+</div>
+
+<div class="legend">
+<span><i style="background:#1b2a4d"></i>هنوز بررسی نشده</span>
+<span><i style="background:#36d9ed"></i>عدد اول فعلی</span>
+<span><i style="background:#783a4b"></i>خط خورده</span>
+<span><i style="background:#ffc857"></i>عدد اول</span>
+</div>
+
+<div class="canvas-wrap"><canvas id="labCanvas"></canvas></div>
+<div class="description hidden" id="labNote" style="line-height:2"></div>
+<div id="labChartBox" class="hidden" style="margin-top:14px">
+<div class="panel-title">چگالی اعداد اول در طول بازه: خط آبی مقدار واقعی، خط طلایی چین‌چین تقریب ۱/ln x</div>
+<canvas id="labChart" width="1100" height="220" style="width:100%;height:auto;background:#090f22;border:1px solid var(--line);border-radius:14px"></canvas>
+</div>
+</div>
+
+<h2 class="section-title">نتایج محاسبه</h2>
+<div class="panel">
+<div class="panel-title">۱۰۰ عدد اول ابتدایی در محدوده انتخاب‌شده</div>
+<div class="results" id="results">
+<div class="description">پس از محاسبه، نتایج اینجا نمایش داده می‌شوند.</div>
+</div>
+<div class="actions">
+<button class="btn secondary" id="download" disabled>دانلود CSV</button>
+</div>
+</div>
+
+<div class="footer">
+Sieve of Eratosthenes, created by Mohammad Taha Gholami
+<br>
+ساخته شده توسط محمد طاها غلامی
+</div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+
+let worker=null;
+let startedAt=0;
+let timer=null;
+let lastResult=null;
+
+const workerCode=`
+let stopped=false;
+
+self.onmessage=async function(event){
+if(event.data.type==="cancel"){
+stopped=true;
+return;
+}
+
+if(event.data.type!=="start")return;
+
+stopped=false;
+
+const limit=event.data.limit;
+const segmentSize=1000000;
+const root=Math.floor(Math.sqrt(limit));
+
+const baseFlags=new Uint8Array(root+1);
+baseFlags.fill(1);
+baseFlags[0]=0;
+if(root>=1)baseFlags[1]=0;
+
+const basePrimes=[];
+
+for(let p=2;p*p<=root;p++){
+if(baseFlags[p]){
+for(let j=p*p;j<=root;j+=p)baseFlags[j]=0;
+}
+}
+
+for(let i=2;i<=root;i++){
+if(baseFlags[i])basePrimes.push(i);
+}
+
+let count=0;
+let first=[];
+let low=2;
+let segments=0;
+
+while(low<=limit){
+if(stopped){
+postMessage({type:"cancelled"});
+return;
+}
+
+const high=Math.min(low+segmentSize-1,limit);
+const flags=new Uint8Array(high-low+1);
+flags.fill(1);
+
+for(const p of basePrimes){
+const square=p*p;
+if(square>high)break;
+
+let start=Math.max(square,Math.ceil(low/p)*p);
+
+for(let j=start;j<=high;j+=p){
+flags[j-low]=0;
+}
+}
+
+for(let i=0;i<flags.length;i++){
+if(flags[i]){
+const n=low+i;
+count++;
+if(first.length<100)first.push(n);
+}
+}
+
+segments++;
+
+if(segments%2===0 || high===limit){
+postMessage({
+type:"progress",
+checked:high,
+limit:limit,
+count:count,
+first:first,
+segments:segments
+});
+}
+
+low=high+1;
+
+await new Promise(resolve=>setTimeout(resolve,0));
+}
+
+postMessage({
+type:"done",
+count:count,
+first:first,
+checked:limit,
+segments:segments
+});
+};
+`;
+
+function format(n){
+return Number(n).toLocaleString("en-US");
+}
+function faNum(n){
+return Number(n).toLocaleString("fa-IR");
+}
+
+function parseNumber(s){
+return Number(String(s).replace(/[,\s٬،]/g,"").replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)));
+}
+
+function showFirst(arr){
+const box=$("firstPrimes");
+box.innerHTML="";
+arr.slice(0,100).forEach(n=>{
+const e=document.createElement("div");
+e.className="result prime";
+e.textContent=format(n);
+box.append(e);
+});
+}
+
+function startCalculation(){
+const limit=parseNumber($("limit").value);
+
+if(!Number.isSafeInteger(limit)||limit<2||limit>9999999999){
+$("status").textContent="عدد باید بین ۲ و ۹٬۹۹۹٬۹۹۹٬۹۹۹ باشد.";
+return;
+}
+
+if(worker)worker.terminate();
+clearInterval(timer);
+
+worker=new Worker(URL.createObjectURL(new Blob([workerCode],{type:"text/javascript"})));
+
+startedAt=performance.now();
+lastResult=null;
+
+$("primeCount").textContent="در حال محاسبه";
+$("checked").textContent="0";
+$("elapsed").textContent="0s";
+$("progressFill").style.width="0%";
+$("percent").textContent="۰٪";
+$("progressText").textContent="شروع محاسبه";
+$("status").textContent="در حال ساخت جدول اعداد اول پایه...";
+$("results").innerHTML="";
+$("download").disabled=true;
+$("start").disabled=true;
+$("cancel").disabled=false;
+
+timer=setInterval(()=>{
+$("elapsed").textContent=((performance.now()-startedAt)/1000).toFixed(1)+"s";
+},100);
+
+worker.onmessage=e=>{
+const data=e.data;
+
+if(data.type==="progress"){
+const percent=data.checked/data.limit*100;
+
+$("primeCount").textContent=format(data.count);
+$("checked").textContent=format(data.checked);
+$("progressFill").style.width=percent+"%";
+$("percent").textContent=percent.toFixed(2)+"٪";
+$("progressText").textContent=format(data.checked)+" از "+format(data.limit);
+$("status").textContent="تعداد قطعات پردازش‌شده: "+format(data.segments);
+showFirst(data.first);
+}
+
+if(data.type==="done"){
+clearInterval(timer);
+lastResult=data;
+
+$("primeCount").textContent=format(data.count);
+$("checked").textContent=format(data.checked);
+$("progressFill").style.width="100%";
+$("percent").textContent="۱۰۰٪";
+$("progressText").textContent="محاسبه کامل شد";
+$("status").textContent="محاسبه با موفقیت پایان یافت. تعداد قطعات: "+format(data.segments);
+$("elapsed").textContent=((performance.now()-startedAt)/1000).toFixed(2)+"s";
+
+showFirst(data.first);
+
+const box=$("results");
+box.innerHTML="";
+data.first.forEach(n=>{
+const d=document.createElement("div");
+d.className="result prime";
+d.textContent=format(n);
+box.append(d);
+});
+
+$("download").disabled=false;
+$("start").disabled=false;
+$("cancel").disabled=true;
+worker.terminate();
+worker=null;
+}
+
+if(data.type==="cancelled"){
+clearInterval(timer);
+$("status").textContent="محاسبه متوقف شد.";
+$("start").disabled=false;
+$("cancel").disabled=true;
+$("primeCount").textContent="متوقف شد";
+if(worker)worker.terminate();
+worker=null;
+}
+};
+
+worker.onerror=()=>{
+clearInterval(timer);
+$("status").textContent="خطا در اجرای محاسبات. مرورگر را بررسی کن.";
+$("start").disabled=false;
+$("cancel").disabled=true;
+worker.terminate();
+worker=null;
+};
+
+worker.postMessage({type:"start",limit:limit});
+}
+
+$("start").onclick=startCalculation;
+
+$("cancel").onclick=()=>{
+if(worker){
+worker.postMessage({type:"cancel"});
+$("status").textContent="درخواست توقف ارسال شد...";
+$("cancel").disabled=true;
+}
+};
+
+[100000,1000000,10000000,100000000,9999999999].forEach((n,i)=>{
+$("quick"+(i+1)).onclick=()=>{
+$("limit").value=String(n);
+};
+});
+
+$("download").onclick=()=>{
+if(!lastResult)return;
+
+const rows=[
+["Prime Number"],
+...lastResult.first.map(n=>[n])
+];
+
+const csv="\uFEFF"+rows.map(r=>r.join(",")).join("\r\n");
+const blob=new Blob([csv],{type:"text/csv;charset=utf-8"});
+const url=URL.createObjectURL(blob);
+const a=document.createElement("a");
+a.href=url;
+a.download="eratosthenes-first-100-primes.csv";
+a.click();
+URL.revokeObjectURL(url);
+};
+
+/* =====================================================
+   آزمایشگاه تصویری غربال
+   - تا ۲٬۵۰۰: هر عدد یک خانه (متنی)
+   - تا ۱۰ میلیون: خط خوردن زنده، خانه‌های تجمیعی
+   - تا ۱۰ میلیارد: اسکن قطعه‌ای در Worker + نقشه‌ی چگالی
+   ===================================================== */
+const LAB_MAX=9999999999;
+const ANIM_MAX=10000000;
+const TEXT_MODE_MAX=2500;
+const CELL_W=46,CELL_H=32;
+const KNOWN={100000:9592,1000000:78498,10000000:664579,100000000:5761455,1000000000:50847534,9999999999:455052511};
+const rgba=(r,g,b)=>((255<<24)|(b<<16)|(g<<8)|r)>>>0;
+const PIX={0:rgba(27,42,77),1:rgba(255,200,87),2:rgba(120,58,75),3:rgba(54,217,237),one:rgba(50,60,85)};
+const CSS_COL={0:"#1b2a4d",1:"#4a3d1a",2:"#3a1e2c",3:"#0f4a55"};
+
+// پالت رنگی نقشه‌ی چگالی (تیره -> بنفش -> فیروزه‌ای -> طلایی -> سفید)
+const PAL=[[0,[14,22,60]],[0.35,[76,48,190]],[0.65,[54,217,237]],[0.88,[255,200,87]],[1,[255,245,220]]];
+const LUT=new Uint32Array(256);
+(function(){
+for(let k=0;k<256;k++){
+const t=k/255;
+let c=PAL[PAL.length-1][1];
+for(let i=1;i<PAL.length;i++){
+if(t<=PAL[i][0]){
+const a=PAL[i-1],b=PAL[i],u=(t-a[0])/(b[0]-a[0]);
+c=[a[1][0]+(b[1][0]-a[1][0])*u,a[1][1]+(b[1][1]-a[1][1])*u,a[1][2]+(b[1][2]-a[1][2])*u];
+break;
+}
+}
+LUT[k]=rgba(c[0]|0,c[1]|0,c[2]|0);
+}
+})();
+const EMPTY=rgba(14,21,46);
+
+const canvas=$("labCanvas");
+const ctx=canvas.getContext("2d");
+const lab={
+N:100,flags:null,p:2,j:0,phase:"pick",crossed:0,ops:0,done:false,running:false,
+mode:"text",cols:10,rows:10,img:null,buf:null,dMin:0,dMax:-1,needsDraw:true,
+accum:0,last:0,raf:0,pc:0,bins:0,cc:null,pcnt:null,sz:null,
+worker:null,counts:null,binsDone:0,curHi:0,runMs:0
+};
+
+/* ---------- سرعت ---------- */
+function speedRate(v){
+return lab.mode==="scan"?Math.pow(10,v*0.05):Math.pow(10,v*0.08);
+}
+function updateSpeedText(){
+const v=+$("labSpeed").value;
+if(v>=100){$("labSpeedText").textContent="حداکثر سرعت ⚡";return;}
+const r=speedRate(v);
+const unit=lab.mode==="scan"?" خانه در ثانیه":" خط‌خوردن در ثانیه";
+$("labSpeedText").textContent=(r<10?faNum(Math.round(r*10)/10):faNum(Math.round(r)))+unit;
+}
+function autoSpeed(N){
+let v;
+if(N>ANIM_MAX){
+const rate=80000/20;
+v=Math.round(Math.log10(rate)/0.05);
+}else{
+const ops=N<4?1:N-N/Math.log(N);
+const rate=Math.max(1,ops/12);
+v=Math.round(Math.log10(rate)/0.08);
+}
+v=Math.max(0,Math.min(100,v));
+$("labSpeed").value=v;
+updateSpeedText();
+}
+function sendSpeed(){
+if(lab.worker){
+const v=+$("labSpeed").value;
+lab.worker.postMessage({type:"speed",rate:v>=100?Infinity:speedRate(v)});
+}
+}
+
+/* ---------- Worker اسکن قطعه‌ای ---------- */
+const scanWorkerCode=`
+let paused=false,stopped=false,rate=Infinity,due=0,stepReq=0;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+self.onmessage=function(e){
+const d=e.data;
+if(d.type==="start"){paused=!!d.paused;rate=d.rate;due=performance.now();run(d.N,d.bins);}
+else if(d.type==="speed"){rate=d.rate;due=performance.now();}
+else if(d.type==="pause"){paused=true;}
+else if(d.type==="resume"){paused=false;due=performance.now();}
+else if(d.type==="step"){stepReq+=d.n;}
+else if(d.type==="stop"){stopped=true;}
+};
+async function run(N,bins){
+const root=Math.floor(Math.sqrt(N))+1;
+const sv=new Uint8Array(root+1);
+const bp=[];
+for(let i=2;i<=root;i++){
+if(!sv[i]){
+if(i>2)bp.push(i);
+for(let j=i*i;j<=root;j+=i)sv[j]=1;
+}
+}
+const seg=new Uint8Array(Math.ceil(N/bins)+2);
+let batch=[],bStart=0,hiLast=0;
+let lastYield=performance.now();
+function flush(){
+if(batch.length){
+postMessage({type:"progress",start:bStart,counts:Uint32Array.from(batch),hi:hiLast});
+bStart+=batch.length;
+batch=[];
+}
+}
+let b=0;
+while(b<bins){
+if(stopped)return;
+if(paused&&stepReq<=0){flush();await sleep(30);continue;}
+if(!paused&&rate!==Infinity){
+const now=performance.now();
+if(due>now){flush();await sleep(Math.min(25,due-now));continue;}
+if(now-due>200)due=now-200;
+due+=1000/rate;
+}
+if(paused)stepReq--;
+const lo=Math.floor(b*N/bins)+1;
+const hi=Math.floor((b+1)*N/bins);
+const len=hi-lo+1;
+seg.fill(0,0,len);
+if(lo===1)seg[0]=1;
+for(let k=0;k<bp.length;k++){
+const p=bp[k];
+const pp=p*p;
+if(pp>hi)break;
+let j=Math.ceil(lo/p)*p;
+if(j<pp)j=pp;
+if(j%2===0)j+=p;
+const step=2*p;
+for(;j<=hi;j+=step)seg[j-lo]=1;
+}
+let count=(lo<=2&&2<=hi)?1:0;
+for(let i=(lo%2===1?0:1);i<len;i+=2){
+if(seg[i]===0)count++;
+}
+batch.push(count);
+hiLast=hi;
+b++;
+if(paused)flush();
+const t=performance.now();
+if(t-lastYield>30){flush();await sleep(0);lastYield=performance.now();}
+}
+flush();
+postMessage({type:"done"});
+}
+`;
+
+function ensureWorker(startPaused){
+if(lab.worker)return;
+const w=new Worker(URL.createObjectURL(new Blob([scanWorkerCode],{type:"text/javascript"})));
+lab.worker=w;
+w.onmessage=e=>{
+const d=e.data;
+if(d.type==="progress"){
+const c=d.counts;
+for(let i=0;i<c.length;i++){lab.counts[d.start+i]=c[i];lab.pc+=c[i];}
+lab.binsDone=d.start+c.length;
+lab.curHi=d.hi;
+scheduleScan();
+}else if(d.type==="done"){
+lab.done=true;lab.running=false;
+w.terminate();lab.worker=null;
+$("labPlay").textContent="▶ شروع";
+$("labPlay").disabled=true;
+scheduleScan();
+}
+};
+const v=+$("labSpeed").value;
+w.postMessage({type:"start",N:lab.N,bins:lab.bins,paused:!!startPaused,rate:v>=100?Infinity:speedRate(v)});
+}
+
+let scanPending=false,lastFrameT=0;
+function scheduleScan(){
+if(scanPending)return;
+scanPending=true;
+requestAnimationFrame(scanFrame);
+}
+function scanFrame(ts){
+scanPending=false;
+if(lab.mode!=="scan")return;
+if(lab.running&&lastFrameT)lab.runMs+=Math.min(200,ts-lastFrameT);
+lastFrameT=ts;
+scanDraw();
+drawChart();
+labStats();
+document.querySelector(".canvas-wrap").classList.toggle("glow",lab.running&&!lab.done);
+if(lab.running&&!lab.done)scheduleScan();else lastFrameT=0;
+}
+
+function scanDraw(){
+const N=lab.N,bins=lab.bins,buf=lab.buf,done=lab.binsDone;
+const span=N/bins;
+const lo=1/Math.log(N),hi=1/Math.log(0.03*N),rng=hi-lo;
+const counts=lab.counts;
+for(let b=0;b<bins;b++){
+if(b<done){
+let t=(counts[b]/span-lo)/rng;
+t=t<0?0:t>1?1:t;
+buf[b]=LUT[(t*255)|0];
+}else buf[b]=EMPTY;
+}
+if(!lab.done&&done<bins){
+for(let k=0;k<4&&done+k<bins;k++){
+const a=[255,230,180,120][k];
+buf[done+k]=rgba(a,a,255);
+}
+}
+ctx.putImageData(lab.img,0,0);
+if(!lab.done&&done<bins){
+const row=Math.floor(done/lab.cols);
+ctx.fillStyle="rgba(54,217,237,0.22)";
+ctx.fillRect(0,row,lab.cols,1);
+}
+}
+
+function drawChart(){
+const c=$("labChart"),g=c.getContext("2d"),W=c.width,H=c.height;
+g.clearRect(0,0,W,H);
+const L=48,R=12,T=14,B=26,pw=W-L-R,ph=H-T-B;
+const pts=200,per=lab.bins/pts,span=lab.N/lab.bins;
+const th=new Array(pts),ac=new Array(pts);
+let mn=1,mx=0;
+for(let i=0;i<pts;i++){
+let s=0;
+for(let k=0;k<4;k++){const x=(i+(k+0.5)/4)*per*span;s+=1/Math.log(x);}
+th[i]=s/4;
+const end=(i+1)*per;
+if(end<=lab.binsDone){
+let sum=0;
+for(let b=i*per;b<end;b++)sum+=lab.counts[b];
+ac[i]=sum/(per*span);
+}else ac[i]=null;
+if(th[i]<mn)mn=th[i];
+if(th[i]>mx)mx=th[i];
+}
+mn*=0.88;mx*=1.06;
+const X=i=>L+pw*(i+0.5)/pts;
+const Y=v=>T+ph*(1-(v-mn)/(mx-mn));
+g.font="11px Vazirmatn,Tahoma,sans-serif";
+g.fillStyle="#91a2c7";
+g.strokeStyle="#1d2a49";
+g.lineWidth=1;
+for(let k=0;k<=4;k++){
+const v=mn+(mx-mn)*k/4,y=Y(v);
+g.beginPath();g.moveTo(L,y);g.lineTo(W-R,y);g.stroke();
+g.textAlign="right";
+g.fillText((v*100).toFixed(1)+"%",L-6,y+4);
+}
+g.textAlign="left";g.fillText("0",L,H-8);
+g.textAlign="right";g.fillText(format(lab.N),W-R,H-8);
+// مساحت زیر منحنی واقعی
+let first=-1,last=-1;
+for(let i=0;i<pts;i++)if(ac[i]!==null){if(first<0)first=i;last=i;}
+if(first>=0){
+const grad=g.createLinearGradient(0,T,0,T+ph);
+grad.addColorStop(0,"rgba(54,217,237,0.45)");
+grad.addColorStop(1,"rgba(54,217,237,0.02)");
+g.beginPath();
+g.moveTo(X(first),T+ph);
+for(let i=first;i<=last;i++)g.lineTo(X(i),Y(ac[i]));
+g.lineTo(X(last),T+ph);
+g.closePath();
+g.fillStyle=grad;g.fill();
+g.beginPath();
+for(let i=first;i<=last;i++){if(i===first)g.moveTo(X(i),Y(ac[i]));else g.lineTo(X(i),Y(ac[i]));}
+g.strokeStyle="#36d9ed";g.lineWidth=2;g.shadowColor="#36d9ed";g.shadowBlur=10;g.stroke();
+g.shadowBlur=0;
+}
+// منحنی نظری
+g.beginPath();
+for(let i=0;i<pts;i++){if(i===0)g.moveTo(X(i),Y(th[i]));else g.lineTo(X(i),Y(th[i]));}
+g.setLineDash([6,5]);g.strokeStyle="#ffc857";g.lineWidth=1.6;g.stroke();g.setLineDash([]);
+}
+
+/* ---------- ساخت / بازنشانی ---------- */
+function setLabels(mode){
+if(mode==="scan"){
+$("labPL").textContent="عدد در حال اسکن";
+$("labCL").textContent="مرکب‌ها تا اینجا";
+$("labPrL").textContent="اعداد اول تا اینجا";
+$("labOL").textContent="خانه‌های اسکن‌شده";
+$("labStep").textContent="یک خانه";
+$("labStepPrime").textContent="۵۰۰ خانه جلو";
+$("labSkip").textContent="حداکثر سرعت";
+}else{
+$("labPL").textContent="عدد اول در حال بررسی";
+$("labCL").textContent="خط‌خورده‌ها (مرکب)";
+$("labPrL").textContent="اعداد اول تا اینجا";
+$("labOL").textContent="گام‌های انجام‌شده";
+$("labStep").textContent="یک قدم";
+$("labStepPrime").textContent="یک عدد اول کامل";
+$("labSkip").textContent="پرش به پایان";
+}
+}
+
+function labInit(N){
+if(lab.worker){lab.worker.postMessage({type:"stop"});lab.worker.terminate();lab.worker=null;}
+labStop();
+lab.N=N;
+lab.done=false;lab.accum=0;lab.pc=0;lab.crossed=0;lab.ops=0;lab.binsDone=0;lab.curHi=0;lab.runMs=0;
+lab.p=2;lab.j=0;lab.phase="pick";
+lab.mode=N<=TEXT_MODE_MAX?"text":N<=ANIM_MAX?"pixel":"scan";
+setLabels(lab.mode);
+document.querySelector(".canvas-wrap").classList.remove("glow");
+$("labChartBox").classList.toggle("hidden",lab.mode!=="scan");
+
+if(lab.mode==="text"){
+lab.flags=new Uint8Array(N+1);
+lab.flags[0]=2;lab.flags[1]=2;
+lab.cols=N<=100?10:N<=400?20:Math.ceil(Math.sqrt(N*1.8));
+lab.rows=Math.ceil(N/lab.cols);
+canvas.width=lab.cols*CELL_W;
+canvas.height=lab.rows*CELL_H;
+canvas.style.maxWidth=canvas.width+"px";
+canvas.style.imageRendering="auto";
+lab.img=null;lab.buf=null;
+}else if(lab.mode==="pixel"){
+lab.flags=new Uint8Array(N+1);
+lab.flags[0]=2;lab.flags[1]=2;
+lab.bins=Math.min(N,80000);
+lab.cols=Math.ceil(Math.sqrt(lab.bins*2));
+lab.rows=Math.ceil(lab.bins/lab.cols);
+canvas.width=lab.cols;
+canvas.height=lab.rows;
+canvas.style.maxWidth="none";
+canvas.style.imageRendering="pixelated";
+lab.img=ctx.createImageData(lab.cols,lab.rows);
+lab.buf=new Uint32Array(lab.img.data.buffer);
+lab.cc=new Uint32Array(lab.bins);
+lab.pcnt=new Uint32Array(lab.bins);
+lab.sz=new Uint32Array(lab.bins);
+for(let n=1;n<=N;n++)lab.sz[binOf(n)]++;
+lab.cc[0]++;
+lab.dMin=0;lab.dMax=lab.rows-1;
+}else{
+lab.flags=null;
+lab.bins=80000;
+lab.cols=400;
+lab.rows=200;
+canvas.width=lab.cols;
+canvas.height=lab.rows;
+canvas.style.maxWidth="none";
+canvas.style.imageRendering="auto";
+lab.img=ctx.createImageData(lab.cols,lab.rows);
+lab.buf=new Uint32Array(lab.img.data.buffer);
+lab.counts=new Uint32Array(lab.bins);
+}
+
+const note=$("labNote");
+if(lab.mode==="pixel"){
+note.classList.remove("hidden");
+note.textContent=lab.bins>=N
+?"هر خانه یک عدد است. به ترتیب از بالا-چپ به پایین-راست."
+:"هر خانه نماینده‌ی حدود "+format(Math.round(N/lab.bins))+" عدد پشت‌سرهم است (از بالا-چپ به پایین-راست). هرچه قرمزتر، مضرب‌های بیشتری در آن خط خورده؛ هرچه طلایی‌تر، اعداد اول بیشتری دارد.";
+}else if(lab.mode==="scan"){
+note.classList.remove("hidden");
+note.textContent="برای این بازه نگه داشتن "+format(N)+" عدد در حافظه ممکن نیست، پس غربال قطعه‌به‌قطعه (Segmented Sieve) و در یک Worker جدا اجرا می‌شود. هر خانه حدود "+format(Math.round(N/lab.bins))+" عدد است (از بالا-چپ به پایین-راست) و رنگش چگالی اعداد اول در آن بازه است: هرچه روشن‌تر (طلایی/سفید)، اعداد اول بیشتر. خط سفید-آبی محل اسکن فعلی است. با حداکثر سرعت روی ۱۰ میلیارد بسته به دستگاه ممکن است یک تا چند دقیقه طول بکشد.";
+}else note.classList.add("hidden");
+
+lab.needsDraw=true;
+if(lab.mode==="scan"){
+scanDraw();drawChart();
+}else labDraw();
+$("labPlay").textContent="▶ شروع";
+$("labPlay").disabled=false;
+labStats();
+$("labInfo").textContent=lab.mode==="scan"
+?"آماده شروع. اسکن قطعه‌ای تا "+format(N)+"."
+:"آماده شروع. عدد ۱ اول نیست و از ابتدا کنار گذاشته می‌شود.";
+}
+
+function binOf(n){return Math.floor(((n-1)*lab.bins)/lab.N);}
+function paint(n,s){
+lab.flags[n]=s;
+if(s===1)lab.pc++;
+if(lab.mode==="pixel"){
+const b=binOf(n);
+if(s===2)lab.cc[b]++;
+else if(s===1)lab.pcnt[b]++;
+const y=(b/lab.cols)|0;
+if(y<lab.dMin)lab.dMin=y;
+if(y>lab.dMax)lab.dMax=y;
+}
+}
+
+function finish(){
+const f=lab.flags;
+for(let n=2;n<=lab.N;n++)if(f[n]===0)paint(n,1);
+lab.done=true;
+lab.running=false;
+cancelAnimationFrame(lab.raf);
+$("labPlay").textContent="▶ شروع";
+$("labPlay").disabled=true;
+}
+
+// untilPrimeEnd: تا پایان خط زدن مضرب‌های یک عدد اول ادامه بده
+function labWork(maxOps,deadline,untilPrimeEnd){
+const N=lab.N,f=lab.flags;
+let ops=0,iter=0;
+while(!lab.done&&ops<maxOps){
+if(lab.phase==="pick"){
+let p=lab.p;
+while(p*p<=N&&f[p]!==0)p++;
+lab.p=p;
+if(p*p>N){finish();break;}
+paint(p,3);
+lab.j=p*p;
+lab.phase="cross";
+ops++;
+}else{
+const p=lab.p;
+let j=lab.j;
+while(j<=N&&f[j]===2)j+=p;
+if(j<=N){
+paint(j,2);
+lab.crossed++;
+j+=p;
+lab.j=j;
+ops++;
+}else{
+paint(p,1);
+lab.p=p+1;
+lab.phase="pick";
+ops++;
+if(untilPrimeEnd)break;
+}
+}
+if(deadline&&((++iter)&1023)===0&&performance.now()>deadline)break;
+}
+lab.ops+=ops;
+lab.needsDraw=true;
+}
+
+function labDraw(){
+if(!lab.needsDraw)return;
+lab.needsDraw=false;
+if(lab.mode==="pixel"){
+if(lab.dMax>=lab.dMin){
+const cols=lab.cols,bins=lab.bins,buf=lab.buf;
+const cur=(!lab.done&&lab.phase==="cross")?binOf(lab.p):-1;
+for(let y=lab.dMin;y<=lab.dMax;y++){
+for(let x=0;x<cols;x++){
+const b=y*cols+x;
+if(b>=bins){buf[b]=0;continue;}
+if(b===cur){buf[b]=PIX[3];continue;}
+const sz=lab.sz[b];
+const c=lab.cc[b]/sz,pr=lab.pcnt[b]/sz,u=Math.max(0,1-c-pr);
+const t=u+c;
+const w=t>0?c/t:1;
+let r=27+(120-27)*w,g=42+(58-42)*w,bl=77+(75-77)*w;
+const k=Math.min(1,pr*5);
+r+=(255-r)*k;g+=(200-g)*k;bl+=(87-bl)*k;
+buf[b]=rgba(r|0,g|0,bl|0);
+}
+}
+ctx.putImageData(lab.img,0,0,0,lab.dMin,cols,lab.dMax-lab.dMin+1);
+}
+lab.dMin=lab.rows;lab.dMax=-1;
+return;
+}
+const N=lab.N,f=lab.flags,cols=lab.cols;
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.textAlign="center";
+ctx.textBaseline="middle";
+ctx.font="13px Consolas,monospace";
+for(let n=1;n<=N;n++){
+const x=((n-1)%cols)*CELL_W,y=Math.floor((n-1)/cols)*CELL_H;
+const s=n===1?2:f[n];
+ctx.fillStyle=n===1?"#1a2238":CSS_COL[s];
+ctx.fillRect(x+1,y+1,CELL_W-2,CELL_H-2);
+ctx.strokeStyle=s===1?"#ffc85799":s===3?"#36d9ed":"#29385c";
+ctx.lineWidth=s===3?2:1;
+ctx.strokeRect(x+1.5,y+1.5,CELL_W-3,CELL_H-3);
+ctx.fillStyle=s===1?"#ffc857":s===3?"#36d9ed":s===2?"#8a6b78":"#9aaccd";
+ctx.fillText(String(n),x+CELL_W/2,y+CELL_H/2+1);
+if(s===2){
+ctx.strokeStyle="#fb7185aa";
+ctx.lineWidth=1.5;
+ctx.beginPath();
+ctx.moveTo(x+6,y+CELL_H-6);
+ctx.lineTo(x+CELL_W-6,y+6);
+ctx.stroke();
+}
+}
+if(!lab.done&&lab.phase==="cross"){
+let j=lab.j;
+while(j<=N&&f[j]===2)j+=lab.p;
+if(j<=N){
+const x=((j-1)%cols)*CELL_W,y=Math.floor((j-1)/cols)*CELL_H;
+ctx.strokeStyle="#ffffff";
+ctx.lineWidth=2;
+ctx.strokeRect(x+2,y+2,CELL_W-4,CELL_H-4);
+}
+}
+}
+
+function knownCheck(N,count){
+return KNOWN[N]===count?" ✓ مطابق مقدار شناخته‌شده":"";
+}
+function fmtTime(sec){
+sec=Math.round(sec);
+if(sec<60)return faNum(sec)+" ثانیه";
+return faNum(Math.floor(sec/60))+" دقیقه و "+faNum(sec%60)+" ثانیه";
+}
+
+function labStats(){
+const N=lab.N;
+if(lab.mode==="scan"){
+const frac=lab.binsDone/lab.bins;
+$("labFill").style.width=(frac*100)+"%";
+$("labPct").textContent=faNum(Math.round(frac*1000)/10)+"٪";
+$("labP").textContent=lab.curHi?format(lab.curHi):"-";
+$("labCrossed").textContent=format(Math.max(0,lab.curHi-1-lab.pc));
+$("labPrimes").textContent=format(lab.pc);
+$("labOps").textContent=format(lab.binsDone)+" / "+format(lab.bins);
+if(lab.done){
+$("labInfo").textContent="غربال کامل شد: "+format(lab.pc)+" عدد اول بین ۱ تا "+format(N)+knownCheck(N,lab.pc)+" · زمان: "+fmtTime(lab.runMs/1000);
+}else if(lab.binsDone>0||lab.worker){
+let eta="";
+if(lab.running&&lab.runMs>2000&&frac>0)eta=" · حدود "+fmtTime(lab.runMs/1000*(1-frac)/frac)+" مانده";
+$("labInfo").textContent=(lab.running?"در حال اسکن تا ":"مکث شده روی ")+format(lab.curHi)+eta;
+}
+return;
+}
+const pct=lab.done?100:Math.min(100,(lab.crossed/Math.max(1,N-1-primesUpTo(N)))*100);
+$("labFill").style.width=pct+"%";
+$("labPct").textContent=faNum(Math.round(pct*10)/10)+"٪";
+$("labCrossed").textContent=format(lab.crossed);
+$("labOps").textContent=format(lab.ops);
+if(lab.done){
+const primes=N-1-lab.crossed;
+$("labP").textContent="-";
+$("labPrimes").textContent=format(primes);
+$("labInfo").textContent="غربال کامل شد: "+format(primes)+" عدد اول بین ۱ تا "+format(N)+knownCheck(N,primes);
+}else{
+$("labP").textContent=lab.phase==="cross"?format(lab.p):"-";
+$("labPrimes").textContent=format(lab.pc);
+if(lab.phase==="cross"){
+let j=lab.j;
+const f=lab.flags;
+while(j<=N&&f[j]===2)j+=lab.p;
+$("labInfo").textContent=j<=N
+?"عدد "+format(lab.p)+" اول است؛ در حال خط زدن مضرب‌های آن ("+format(j)+")"
+:"مضرب‌های "+format(lab.p)+" تمام شد";
+}else if(lab.ops>0){
+$("labInfo").textContent="در حال پیدا کردن عدد اول بعدی...";
+}
+}
+}
+// تخمین تعداد اول‌ها برای نوار پیشرفت (فقط تقریبی)
+function primesUpTo(N){return N<3?(N>=2?1:0):Math.floor(N/(Math.log(N)-1.08366));}
+
+function labStop(){
+lab.running=false;
+cancelAnimationFrame(lab.raf);
+if(lab.mode==="scan"&&lab.worker&&!lab.done)lab.worker.postMessage({type:"pause"});
+$("labPlay").textContent="▶ شروع";
+}
+
+function labTick(ts){
+if(!lab.running)return;
+const dt=Math.min(0.1,(ts-lab.last)/1000);
+lab.last=ts;
+const v=+$("labSpeed").value;
+if(v>=100){
+labWork(Infinity,performance.now()+14);
+}else{
+lab.accum+=speedRate(v)*dt;
+const k=Math.floor(lab.accum);
+if(k>0){
+lab.accum-=k;
+labWork(k,performance.now()+14);
+}
+}
+labDraw();
+labStats();
+if(lab.running&&!lab.done)lab.raf=requestAnimationFrame(labTick);
+}
+
+function labPlayPause(){
+if(lab.done)return;
+if(lab.mode==="scan"){
+if(!lab.worker){
+ensureWorker(false);
+lab.running=true;
+}else if(lab.running){
+lab.worker.postMessage({type:"pause"});
+lab.running=false;
+}else{
+lab.worker.postMessage({type:"resume"});
+lab.running=true;
+}
+$("labPlay").textContent=lab.running?"⏸ مکث":"▶ ادامه";
+scheduleScan();
+return;
+}
+if(lab.running){labStop();return;}
+lab.running=true;
+lab.last=performance.now();
+$("labPlay").textContent="⏸ مکث";
+lab.raf=requestAnimationFrame(labTick);
+}
+
+function scanStep(n){
+if(lab.done)return;
+if(lab.running){lab.running=false;$("labPlay").textContent="▶ ادامه";}
+if(!lab.worker)ensureWorker(true);
+else lab.worker.postMessage({type:"pause"});
+lab.worker.postMessage({type:"step",n:n});
+scheduleScan();
+}
+
+$("labPlay").onclick=labPlayPause;
+$("labStep").onclick=()=>{
+if(lab.mode==="scan"){scanStep(1);return;}
+if(lab.done)return;
+labStop();
+labWork(1);
+labDraw();labStats();
+};
+$("labStepPrime").onclick=()=>{
+if(lab.mode==="scan"){scanStep(500);return;}
+if(lab.done)return;
+labStop();
+labWork(Infinity,null,true);
+labDraw();labStats();
+};
+$("labSkip").onclick=()=>{
+if(lab.done)return;
+if(lab.mode==="scan"){
+$("labSpeed").value=100;
+updateSpeedText();
+sendSpeed();
+if(!lab.running)labPlayPause();
+return;
+}
+labStop();
+$("labInfo").textContent="در حال محاسبه...";
+setTimeout(()=>{
+labWork(Infinity,null);
+if(!lab.done)finish();
+labDraw();labStats();
+},20);
+};
+$("labReset").onclick=()=>labInit(lab.N);
+
+$("labSpeed").oninput=()=>{updateSpeedText();sendSpeed();};
+document.querySelectorAll("[data-v]").forEach(b=>{
+b.onclick=()=>{$("labSpeed").value=b.dataset.v;updateSpeedText();sendSpeed();};
+});
+$("labAuto").onclick=()=>{autoSpeed(lab.N);sendSpeed();};
+
+function labApply(n){
+const N=n===undefined?parseNumber($("labN").value):n;
+if(!Number.isSafeInteger(N)||N<2||N>LAB_MAX){
+$("labInfo").textContent="عدد باید بین ۲ و ۹٬۹۹۹٬۹۹۹٬۹۹۹ باشد.";
+return;
+}
+$("labN").value=String(N);
+labInit(N);
+autoSpeed(N);
+}
+$("labApply").onclick=()=>labApply();
+$("labN").addEventListener("keydown",e=>{if(e.key==="Enter")labApply();});
+document.querySelectorAll("#labQuick [data-n]").forEach(b=>{
+b.onclick=()=>labApply(Number(b.dataset.n));
+});
+
+updateSpeedText();
+labApply(100);
+showFirst([2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71]);
+</script>
+</body>
+</html>
